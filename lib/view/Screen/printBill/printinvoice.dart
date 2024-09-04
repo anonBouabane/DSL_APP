@@ -1,31 +1,33 @@
-import 'dart:typed_data'; // Correct import for Uint8List
+class Invoice {
+  String customerName;
+  String invoiceNumber;
+  List<InvoiceItem> items;
 
-import 'package:sunmi_printer_plus/enums.dart';
-import 'package:sunmi_printer_plus/sunmi_printer_plus.dart';
-import 'package:sunmi_printer_plus/sunmi_style.dart';
+  Invoice({required this.customerName, required this.invoiceNumber, required this.items});
 
-class SunmiInvoicePrinter {
-  Future<void> printImage(Uint8List image) async {
-    try {
-      // Initialize the printer
-      await SunmiPrinter.initPrinter();
-
-      // Print the captured image
-      await SunmiPrinter.printImage(image);
-
-      // Optionally, add a line break or other formatting
-      await SunmiPrinter.lineWrap(3);
-      
-      // Use SunmiStyle with printText method
-      await SunmiPrinter.printText(
-        'Thank you!',
-        style: SunmiStyle(align: SunmiPrintAlign.CENTER),
-      );
-
-      // Finish the print transaction
-      await SunmiPrinter.exitTransactionPrint(true);
-    } catch (e) {
-      print('Error printing invoice: $e');
+  void printInvoice() {
+    print('Invoice Number: $invoiceNumber');
+    print('Customer Name: $customerName');
+    print('Items:');
+    for (var item in items) {
+      print('${item.name}: ${item.quantity} x ${item.price}');
     }
+    print('Total: ${calculateTotal()}');
   }
+
+  double calculateTotal() {
+    double total = 0;
+    for (var item in items) {
+      total += item.quantity * item.price;
+    }
+    return total;
+  }
+}
+
+class InvoiceItem {
+  String name;
+  int quantity;
+  double price;
+
+  InvoiceItem({required this.name, required this.quantity, required this.price});
 }

@@ -1,4 +1,3 @@
-
 import 'package:dslsale/view/Screen/printBill/printinvoice.dart';
 import 'package:flutter/material.dart';
 import 'package:screenshot/screenshot.dart';
@@ -17,10 +16,10 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:const  Text('Invoice'),
+        title: const Text('Invoice'),
         actions: [
           IconButton(
-            icon:const Icon(Icons.print),
+            icon: const Icon(Icons.print),
             onPressed: _captureAndPrintInvoice,
           ),
         ],
@@ -38,21 +37,24 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Center(child: Text('Invoice', style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
-          SizedBox(height: 20),
+          const Center(
+              child: Text('Invoice',
+                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
+          const SizedBox(height: 20),
           Text('Date: ${DateTime.now().toLocal().toString().split(' ')[0]}'),
-          SizedBox(height: 20),
-          Text('Bill To:'),
-          Text('John Doe'),
-          Text('123 Main Street'),
-          Text('City, State, ZIP'),
-          SizedBox(height: 20),
-          Text('Description', style: TextStyle(fontWeight: FontWeight.bold)),
-          Divider(),
+          const SizedBox(height: 20),
+          const Text('Bill To:'),
+          const Text('John Doe'),
+          const Text('123 Main Street'),
+          const Text('City, State, ZIP'),
+          const SizedBox(height: 20),
+          const Text('Description',
+              style: TextStyle(fontWeight: FontWeight.bold)),
+          const Divider(),
           _buildInvoiceItem('Item 1', '10.00'),
           _buildInvoiceItem('Item 2', '15.00'),
-          Divider(),
-          SizedBox(height: 10),
+          const Divider(),
+          const SizedBox(height: 10),
           _buildInvoiceItem('Total', '25.00', isBold: true),
         ],
       ),
@@ -63,8 +65,12 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(name, style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
-        Text('\$$price', style: TextStyle(fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
+        Text(name,
+            style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
+        Text('\$$price',
+            style: TextStyle(
+                fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
       ],
     );
   }
@@ -72,7 +78,7 @@ class _InvoiceScreenState extends State<InvoiceScreen> {
   void _captureAndPrintInvoice() async {
     final image = await _screenshotController.capture();
     if (image != null) {
-      await SunmiInvoicePrinter().printImage(image);
+      await   InvoiceItem(name: "asd", quantity: 12, price: 10000);
     }
   }
 }
