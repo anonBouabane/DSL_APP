@@ -45,7 +45,7 @@ class _HistoryInvoiceState extends State<HistoryInvoice> {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) =>   PdfUint8ListExample()));
+                        builder: (context) =>   InvoiceScreen()));
               },
 
               //=============== list view ================//
