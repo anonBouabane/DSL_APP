@@ -1,36 +1,37 @@
 import 'package:flutter/material.dart';
-import 'package:pdf/pdf.dart';
 import 'package:pdf/widgets.dart' as pw;
-import 'package:printing/printing.dart';
 
-class PdfPrintScreen extends StatelessWidget {
-  const PdfPrintScreen({super.key});
+class PdfUint8ListExample extends StatelessWidget {
+  const PdfUint8ListExample({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('PDF Print Example'),
+        title: Text('PDF Uint8List Example'),
         actions: [
           IconButton(
-            icon:const  Icon(Icons.print),
-            onPressed: _printPdf,
+            icon:const  Icon(Icons.save),
+            onPressed: _generateAndSavePdf,
           ),
         ],
       ),
-      body: const Center(
-        child: Text('Press the print button to generate and print PDF.'),
+      body:const Center(
+        child: Text('Press the save button to generate PDF as Uint8List.'),
       ),
     );
   }
 
-  void _printPdf() async {
+  void _generateAndSavePdf() async {
     final pdf = _generatePdf();
 
-    // Use the Printing package to print the PDF
-    await Printing.layoutPdf(
-      onLayout: (PdfPageFormat format) async => pdf.save(),
-    );
+    // Convert PDF to Uint8List
+    final pdfBytes = await pdf.save();
+
+    // Now `pdfBytes` contains the PDF data as a Uint8List
+    // You can now save it, send it over the network, or do anything you need
+
+    print('PDF generated as Uint8List with ${pdfBytes.length} bytes.');
   }
 
   pw.Document _generatePdf() {
@@ -43,12 +44,36 @@ class PdfPrintScreen extends StatelessWidget {
             child: pw.Column(
               mainAxisAlignment: pw.MainAxisAlignment.center,
               children: [
-                pw.Text('Bill Summary', style: pw.TextStyle(fontSize: 24)),
+                pw.Text('Termination Letter', style: pw.TextStyle(fontSize: 24)),
                 pw.SizedBox(height: 20),
-                pw.Text('Item 1: \$10.00'),
-                pw.Text('Item 2: \$15.00'),
+                pw.Text('Employee Name: John Doe'),
+                pw.Text('Position: Software Engineer'),
+                pw.Text('Department: IT Department'),
                 pw.SizedBox(height: 20),
-                pw.Text('Total: \$25.00', style: pw.TextStyle(fontSize: 18)),
+                pw.Text(
+                  'Dear John Doe,',
+                  style: pw.TextStyle(fontSize: 18),
+                ),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  'We regret to inform you that your employment with [Company Name] is terminated, effective immediately. This decision has been made due to [reason for termination].',
+                  style: pw.TextStyle(fontSize: 14),
+                ),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  'You are required to return all company property and settle any outstanding dues. Your final paycheck will be processed and sent to you within the next [time period].',
+                  style: pw.TextStyle(fontSize: 14),
+                ),
+                pw.SizedBox(height: 10),
+                pw.Text(
+                  'We appreciate your contributions to the company and wish you success in your future endeavors.',
+                  style: pw.TextStyle(fontSize: 14),
+                ),
+                pw.SizedBox(height: 40),
+                pw.Text('Sincerely,'),
+                pw.SizedBox(height: 10),
+                pw.Text('HR Department'),
+                pw.Text('[Company Name]'),
               ],
             ),
           );
