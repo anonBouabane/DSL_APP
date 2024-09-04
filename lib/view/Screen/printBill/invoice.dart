@@ -1,72 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:screenshot/screenshot.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 
-class BillScreen extends StatefulWidget {
-  const BillScreen({super.key});
-
-  @override
-  // ignore: library_private_types_in_public_api
-  _BillScreenState createState() => _BillScreenState();
-}
-
-class _BillScreenState extends State<BillScreen> {
-  final ScreenshotController _screenshotController = ScreenshotController();
+class PdfPrintScreen extends StatelessWidget {
+  const PdfPrintScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Bill'),
+        title: const Text('PDF Print Example'),
         actions: [
           IconButton(
-            icon: const Icon(Icons.print),
-            onPressed: _printBill,
-          ),
-          IconButton(
-            icon: const Icon(Icons.camera),
-            onPressed: _captureScreenshot,
+            icon:const  Icon(Icons.print),
+            onPressed: _printPdf,
           ),
         ],
       ),
-      body: Screenshot(
-        controller: _screenshotController,
-        child: _buildBillContent(),
+      body: const Center(
+        child: Text('Press the print button to generate and print PDF.'),
       ),
     );
   }
 
-  Widget _buildBillContent() {
-    // Replace with your actual bill content
-    return const Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Text('Bill Summary', style: TextStyle(fontSize: 24)),
-          SizedBox(height: 20),
-          Text('Item 1: \$10.00'),
-          Text('Item 2: \$15.00'),
-          Text('Total: \$25.00'),
-        ],
-      ),
+  void _printPdf() async {
+    final pdf = _generatePdf();
+
+    // Use the Printing package to print the PDF
+    await Printing.layoutPdf(
+      onLayout: (PdfPageFormat format) async => pdf.save(),
     );
   }
 
-  void _captureScreenshot() async {
-    final image = await _screenshotController.capture();
-    if (image != null) {
-      // Save or share the image file
-      print('Screenshot captured!');
-    }
-  }
+  pw.Document _generatePdf() {
+    final pdf = pw.Document();
 
-  void _printBill() async {
-    final image = await _screenshotController.capture();
-    if (image != null) {
-      await Printing.layoutPdf(
-        onLayout: (format) async => image,
-      );
-      print('Bill sent to printer!');
-    }
+    pdf.addPage(
+      pw.Page(
+        build: (pw.Context context) {
+          return pw.Center(
+            child: pw.Column(
+              mainAxisAlignment: pw.MainAxisAlignment.center,
+              children: [
+                pw.Text('Bill Summary', style: pw.TextStyle(fontSize: 24)),
+                pw.SizedBox(height: 20),
+                pw.Text('Item 1: \$10.00'),
+                pw.Text('Item 2: \$15.00'),
+                pw.SizedBox(height: 20),
+                pw.Text('Total: \$25.00', style: pw.TextStyle(fontSize: 18)),
+              ],
+            ),
+          );
+        },
+      ),
+    );
+
+    return pdf;
   }
 }
