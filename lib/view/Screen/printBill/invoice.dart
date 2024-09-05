@@ -1,84 +1,102 @@
-import 'package:dslsale/view/Screen/printBill/printinvoice.dart';
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:screenshot/screenshot.dart';
+import 'package:pdf/pdf.dart';
+import 'package:pdf/widgets.dart' as pw;
+import 'package:printing/printing.dart';
+import 'package:path_provider/path_provider.dart';
 
-class InvoiceScreen extends StatefulWidget {
+class InvoiceScreen extends StatelessWidget {
   const InvoiceScreen({super.key});
-
-  @override
-  _InvoiceScreenState createState() => _InvoiceScreenState();
-}
-
-class _InvoiceScreenState extends State<InvoiceScreen> {
-  final ScreenshotController _screenshotController = ScreenshotController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Invoice'),
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.print),
-            onPressed: _captureAndPrintInvoice,
-          ),
-        ],
+        title: const Text('Invoice Generator'),
       ),
-      body: Screenshot(
-        controller: _screenshotController,
-        child: _buildInvoiceContent(),
+      body: Center(
+        child: ElevatedButton(
+          child:const Text('Generate Invoice'),
+          onPressed: () {
+            _generateAndPrintInvoice(context);
+          },
+        ),
       ),
     );
   }
 
-  Widget _buildInvoiceContent() {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(
-              child: Text('Invoice',
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold))),
-          const SizedBox(height: 20),
-          Text('Date: ${DateTime.now().toLocal().toString().split(' ')[0]}'),
-          const SizedBox(height: 20),
-          const Text('Bill To:'),
-          const Text('John Doe'),
-          const Text('123 Main Street'),
-          const Text('City, State, ZIP'),
-          const SizedBox(height: 20),
-          const Text('Description',
-              style: TextStyle(fontWeight: FontWeight.bold)),
-          const Divider(),
-          _buildInvoiceItem('Item 1', '10.00'),
-          _buildInvoiceItem('Item 2', '15.00'),
-          const Divider(),
-          const SizedBox(height: 10),
-          _buildInvoiceItem('Total', '25.00', isBold: true),
-        ],
+  Future<void> _generateAndPrintInvoice(BuildContext context) async {
+    final pdf = pw.Document();
+
+    // Create PDF content
+    pdf.addPage(
+      pw.Page(
+        pageFormat: PdfPageFormat.a4,
+        build: (pw.Context context) {
+          return pw.Column(
+            crossAxisAlignment: pw.CrossAxisAlignment.start,
+            children: [
+              pw.Text('Invoice', style:const pw.TextStyle(fontSize: 40)),
+              pw.SizedBox(height: 20),
+              pw.Text('Invoice Number: 001', style:const pw.TextStyle(fontSize: 18)),
+              pw.Text('Date: ${DateTime.now().toString().split(' ')[0]}',
+                  style: pw.TextStyle(fontSize: 18)),
+              pw.SizedBox(height: 20),
+              pw.Text('Bill To:', style: pw.TextStyle(fontSize: 18)),
+              pw.Text('John Doe\n1234 Main Street\nCity, ST 12345',
+                  style: pw.TextStyle(fontSize: 16)),
+              pw.SizedBox(height: 20),
+              pw.Text('Items:', style: pw.TextStyle(fontSize: 18)),
+              pw.Table.fromTextArray(
+                headers: ['Description', 'Quantity', 'Price', 'Total'],
+                data: [
+                  ['Item 1', '1', '\$50.00', '\$50.00'],
+                  ['Item 2', '2', '\$30.00', '\$60.00'],
+                  ['Item 3', '3', '\$20.00', '\$60.00'],
+                ],
+              ),
+              pw.SizedBox(height: 20),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text('Subtotal:', style: pw.TextStyle(fontSize: 18)),
+                  pw.Text('\$170.00', style: pw.TextStyle(fontSize: 18)),
+                ],
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text('Tax (10%):', style: pw.TextStyle(fontSize: 18)),
+                  pw.Text('\$17.00', style: pw.TextStyle(fontSize: 18)),
+                ],
+              ),
+              pw.Row(
+                mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
+                children: [
+                  pw.Text('Total:',
+                      style: pw.TextStyle(
+                          fontSize: 18, fontWeight: pw.FontWeight.bold)),
+                  pw.Text('\$187.00',
+                      style: pw.TextStyle(
+                          fontSize: 18, fontWeight: pw.FontWeight.bold)),
+                ],
+              ),
+              pw.SizedBox(height: 40),
+              pw.Text('Thank you for your business!',
+                  style: pw.TextStyle(fontSize: 18)),
+            ],
+          );
+        },
       ),
     );
-  }
 
-  Widget _buildInvoiceItem(String name, String price, {bool isBold = false}) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(name,
-            style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
-        Text('\$$price',
-            style: TextStyle(
-                fontWeight: isBold ? FontWeight.bold : FontWeight.normal)),
-      ],
-    );
-  }
+    // Save the PDF to a file
+    final output = await getTemporaryDirectory();
+    final file = File("${output.path}/invoice.pdf");
+    await file.writeAsBytes(await pdf.save());
 
-  void _captureAndPrintInvoice() async {
-    final image = await _screenshotController.capture();
-    if (image != null) {
-      await   InvoiceItem(name: "asd", quantity: 12, price: 10000);
-    }
+    // Open print preview
+    await Printing.layoutPdf(
+        onLayout: (PdfPageFormat format) async => pdf.save());
   }
 }
