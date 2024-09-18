@@ -1,6 +1,8 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+// ignore: depend_on_referenced_packages
 import 'package:pdf/pdf.dart';
+// ignore: depend_on_referenced_packages
 import 'package:pdf/widgets.dart' as pw;
 import 'package:printing/printing.dart';
 import 'package:path_provider/path_provider.dart';
@@ -40,13 +42,14 @@ class InvoiceScreen extends StatelessWidget {
               pw.SizedBox(height: 20),
               pw.Text('Invoice Number: 001', style:const pw.TextStyle(fontSize: 18)),
               pw.Text('Date: ${DateTime.now().toString().split(' ')[0]}',
-                  style: pw.TextStyle(fontSize: 18)),
+                  style: const pw.TextStyle(fontSize: 18)),
               pw.SizedBox(height: 20),
-              pw.Text('Bill To:', style: pw.TextStyle(fontSize: 18)),
+              pw.Text('Bill To:', style:const pw.TextStyle(fontSize: 18)),
               pw.Text('John Doe\n1234 Main Street\nCity, ST 12345',
-                  style: pw.TextStyle(fontSize: 16)),
+                  style:const pw.TextStyle(fontSize: 16)),
               pw.SizedBox(height: 20),
-              pw.Text('Items:', style: pw.TextStyle(fontSize: 18)),
+              pw.Text('Items:', style:const pw.TextStyle(fontSize: 18)),
+              // ignore: deprecated_member_use
               pw.Table.fromTextArray(
                 headers: ['Description', 'Quantity', 'Price', 'Total'],
                 data: [
@@ -59,15 +62,15 @@ class InvoiceScreen extends StatelessWidget {
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  pw.Text('Subtotal:', style: pw.TextStyle(fontSize: 18)),
-                  pw.Text('\$170.00', style: pw.TextStyle(fontSize: 18)),
+                  pw.Text('Subtotal:', style:const pw.TextStyle(fontSize: 18)),
+                  pw.Text('\$170.00', style:const pw.TextStyle(fontSize: 18)),
                 ],
               ),
               pw.Row(
                 mainAxisAlignment: pw.MainAxisAlignment.spaceBetween,
                 children: [
-                  pw.Text('Tax (10%):', style: pw.TextStyle(fontSize: 18)),
-                  pw.Text('\$17.00', style: pw.TextStyle(fontSize: 18)),
+                  pw.Text('Tax (10%):', style:const pw.TextStyle(fontSize: 18)),
+                  pw.Text('\$17.00', style:const pw.TextStyle(fontSize: 18)),
                 ],
               ),
               pw.Row(
@@ -83,7 +86,7 @@ class InvoiceScreen extends StatelessWidget {
               ),
               pw.SizedBox(height: 40),
               pw.Text('Thank you for your business!',
-                  style: pw.TextStyle(fontSize: 18)),
+                  style:const pw.TextStyle(fontSize: 18)),
             ],
           );
         },

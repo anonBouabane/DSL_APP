@@ -3,7 +3,6 @@ import 'package:dslsale/util/images.dart';
 import 'package:dslsale/util/textstyle.dart';
 import 'package:flutter/material.dart';
 
-
 class PaymentDetailScreen extends StatefulWidget {
   const PaymentDetailScreen({super.key});
 
@@ -21,10 +20,10 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
         //================= header =================//
 
         appBar: AppBar(
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
           title: const Text(
             'ຊຳລະ',
-            style: textTitlewhite,
+            style: textTitle,
           ),
           leading: IconButton(
               onPressed: () {
@@ -32,7 +31,7 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
               },
               icon: const Icon(
                 Icons.arrow_back_ios_new,
-                color: Colors.white,
+                color: Colors.black,
               )),
         ),
 
@@ -222,43 +221,38 @@ class _PaymentDetailScreenState extends State<PaymentDetailScreen> {
         //======================= footer   ====================//
 
         bottomNavigationBar: BottomAppBar(
-          height: 100,
-          color: const Color.fromARGB(255, 68, 147, 212),
-          child: Column(
-            children: [
-             const Padding(
-                padding:   EdgeInsets.all(2),
-                child:   Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      'total : 12.000.000 LAk',
-                      style: textsimpleWhite,
-                    ),
-                  ],
+            color: Colors.white,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                const Text(
+                  "Total : 120.120.120 ",
+                  style: textSimpleBold,
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 5),
-                child: InkWell(
+                GestureDetector(
                   onTap: () {},
                   child: Container(
+                    height: 50,
+                    width: MediaQuery.of(context).size.width / 2,
                     decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.all(Radius.circular(15))),
-                    height: 40,
-                    width: MediaQuery.of(context).size.width / 1.3,
-                    child: const Center(
-                      child: Text(
-                        'ປິ້ນບິນ',
-                        style: textTitleGrey,
-                      ),
+                        borderRadius: BorderRadius.all(Radius.circular(10)),
+                        color: Colors.amber),
+                    child: const Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          "print",
+                          style: textTitlewhite,
+                        ),
+                        Icon(
+                          Icons.print,
+                          color: Colors.white,
+                        )
+                      ],
                     ),
                   ),
                 ),
-              )
-            ],
-          ),
-        ));
+              ],
+            )));
   }
 }

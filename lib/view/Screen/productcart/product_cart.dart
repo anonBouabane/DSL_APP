@@ -25,12 +25,12 @@ class _CartScreenState extends State<CartScreen> {
             },
             icon: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.white,
+              color: Colors.black,
             )),
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         title: const Text(
           'ກະຕ່າສິນຄ້າ',
-          style: textTitlewhite,
+          style: textTitle,
         ),
         centerTitle: true,
       ),
@@ -111,24 +111,32 @@ class _CartScreenState extends State<CartScreen> {
       //===========>> footer ================
 
       bottomNavigationBar: BottomAppBar(
-        color: const Color.fromARGB(255, 68, 147, 212),
-        child: Container(
-            decoration: const BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.all(Radius.circular(15))),
+        color: Colors.white,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [const Text('Total : 120.200.000',style: textSimpleBold,),
+            Container(
+                height: 50,
+                width: MediaQuery.of(context).size.width/2,
+                decoration: const BoxDecoration(
+                    color: Colors.green,
+                    borderRadius: BorderRadius.all(Radius.circular(10))),
 
-            //====================== tap to payment========================
-            child: TextButton(
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                          builder: (context) => const PaymentDetailScreen()));
-                },
-                child: const Text(
-                  "ຊຳລະ",
-                  style: textTitleGrey,
-                ))),
+                //====================== tap to payment========================
+                child: TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) =>
+                                  const PaymentDetailScreen()));
+                    },
+                    child: const Text(
+                      "ຊຳລະ",
+                      style: textTitlewhite,
+                    ))),
+          ],
+        ),
       ),
     );
   }

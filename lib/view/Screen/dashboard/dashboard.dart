@@ -1,11 +1,17 @@
+import 'dart:async';
+
+import 'package:dslsale/data/controller/auth_controller.dart';
+import 'package:dslsale/message/loading.dart';
 import 'package:dslsale/util/textstyle.dart';
-import 'package:dslsale/view/Screen/dashboard/widget/product_screen.dart';
+import 'package:dslsale/view/Screen/productScreen/product_screen.dart';
 import 'package:dslsale/view/Screen/infocusto/info_custo.dart';
 import 'package:dslsale/view/Screen/printBill/history_invoice.dart';
 import 'package:dslsale/view/Screen/productcart/product_cart.dart';
 import 'package:dslsale/view/Screen/profile/profile.dart';
 import 'package:dslsale/view/Screen/registerCustomer/register_customer.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DashBoardScreen extends StatefulWidget {
   const DashBoardScreen({super.key});
@@ -16,105 +22,101 @@ class DashBoardScreen extends StatefulWidget {
 
 class _DashBoardScreenState extends State<DashBoardScreen> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
         FocusScope.of(context).unfocus();
       },
-      child: Scaffold(
-        // //=========drawer===========//
+      child: Consumer<AuthController>(builder: (context, value, child) {
+        return value.isloading == true
+            ? loading(context)
+            : Scaffold(
+                // //=========drawer===========//
 
-        // drawer: const DrawerScreen(),
-        // backgroundColor: Colors.white,
+                // drawer: const DrawerScreen(),
+                // backgroundColor: Colors.white,
 
-        //==========Topbar =========//
+                //==========Topbar =========//
 
-        body: SingleChildScrollView(
-          child: Stack(
-            children: [
-              const FirstTopbar(),
-              Positioned(
-                top: 35,
-                right: 15,
-                child: SizedBox(
-                  height: 35,
-                  width: 30,
-                  child: CircleAvatar(
-                    backgroundColor: Colors.white,
-                    child: IconButton(
-                        onPressed: () {},
-                        icon: const Icon(
-                          Icons.logout_rounded,
-                          color: Colors.lightBlue,
-                          size: 20,
-                        )),
-                  ),
-                ),
-              ),
-              Positioned(
-                top: 35,
-                left: 15,
-                child: Container(
-                  decoration: const BoxDecoration(
-                      border: Border(top: BorderSide(color: Colors.white),bottom: BorderSide(color: Colors.white))),
-                  child: const Text(
-                    "DSL",
-                    style: textTitlewhite,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height / 9),
-                child: const Divider(indent: 10,endIndent: 10,
-                  color: Colors.white,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height / 6),
-                child: const Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    //>>>>>>>>>>>.second topbar >>>>>.>>>>
-
-                    SecondTopbar()
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                    vertical: MediaQuery.of(context).size.height / 2.8,
-                    horizontal: 10),
-                child: const Column(
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "ຟັງຊັ່ນຫລັກ",
-                            style: textSimpleBold,
+                body: SingleChildScrollView(
+                  child: Stack(
+                    children: [
+                      const FirstTopbar(),
+                    
+                      Positioned(
+                        top: 35,
+                        left: 15,
+                        child: Container(
+                          decoration: const BoxDecoration(
+                              border: Border(
+                                  top: BorderSide(color: Colors.white),
+                                  bottom: BorderSide(color: Colors.white))),
+                          child: const Text(
+                            "DSL",
+                            style: textTitlewhite,
                           ),
-                        ],
+                        ),
                       ),
-                    ),
-                    CardProduct(),
-                    SizedBox(
-                      height: 20,
-                    ),
-                    Divider(
-                      indent: 70,
-                      endIndent: 70,
-                    ),
-                  ],
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: MediaQuery.of(context).size.height / 9),
+                        child: const Divider(
+                          indent: 10,
+                          endIndent: 10,
+                          color: Colors.white,
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: MediaQuery.of(context).size.height / 6),
+                        child: const Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            //>>>>>>>>>>>.second topbar >>>>>.>>>>
+
+                            SecondTopbar()
+                          ],
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                            vertical: MediaQuery.of(context).size.height / 2.8,
+                            horizontal: 10),
+                        child: const Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "ຟັງຊັ່ນຫລັກ",
+                                    style: textSimpleBold,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            CardProduct(),
+                            SizedBox(
+                              height: 20,
+                            ),
+                            Divider(
+                              indent: 70,
+                              endIndent: 70,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ),
-      ),
+              );
+      }),
     );
   }
 }
@@ -127,6 +129,20 @@ class SecondTopbar extends StatefulWidget {
 }
 
 class _SecondTopbarState extends State<SecondTopbar> {
+  String _userName = "";
+  @override
+  void initState() {
+    super.initState();
+    _loadUserName();
+  }
+
+  Future<void> _loadUserName() async {
+    SharedPreferences prefers = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefers.getString('full_name') ?? null.toString();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -139,14 +155,14 @@ class _SecondTopbarState extends State<SecondTopbar> {
           borderRadius: BorderRadius.all(Radius.circular(40))),
       width: MediaQuery.of(context).size.width / 1.2,
       height: 120,
-      child: const Padding(
-        padding: EdgeInsets.all(8.0),
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              "Anon Bouaban",
+              _userName,
               style: textTitlewhite,
             ),
           ],
@@ -196,8 +212,7 @@ class _CardProductState extends State<CardProduct> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
+            Wrap(
               children: [
                 //===========>> purchase product <<============
                 Padding(
@@ -300,12 +315,7 @@ class _CardProductState extends State<CardProduct> {
                       ),
                     ),
                   ),
-                )
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+                ),
                 Padding(
                   //=================>>> print invoice <<<<=============
                   padding: const EdgeInsets.all(8.0),
@@ -408,7 +418,7 @@ class _CardProductState extends State<CardProduct> {
                   ),
                 )
               ],
-            )
+            ),
           ],
         ),
       ),

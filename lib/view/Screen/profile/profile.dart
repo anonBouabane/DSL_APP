@@ -1,5 +1,8 @@
+import 'package:dslsale/data/controller/auth_controller.dart';
 import 'package:dslsale/util/textstyle.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -9,35 +12,54 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  String _userName = "";
+  String _roleName = "";
+  String _departName = "";
+
+  Future _loadprofile() async {
+    SharedPreferences prefers = await SharedPreferences.getInstance();
+    setState(() {
+      _userName = prefers.getString('full_name') ?? null.toString();
+    _departName = prefers.getString('depart_name') ?? null.toString();
+    _roleName = prefers.getString('role_name') ?? null.toString();
+    });
+  }
+
+  @override
+  void initState() {
+    _loadprofile();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       //================= header ===============
       appBar: AppBar(
         centerTitle: true,
-        backgroundColor: Colors.blue,
+        backgroundColor: Colors.white,
         leading: IconButton(
             onPressed: () {
               Navigator.pop(context);
             },
             icon: const Icon(
               Icons.arrow_back_ios_new,
-              color: Colors.white,
+              color: Colors.black,
             )),
         title: const Text(
           "ໂປຣໄຟລ໌",
-          style: textTitlewhite,
+          style: textTitle,
         ),
       ),
 
       //================ content body ====================
-      body: const SingleChildScrollView(
+      body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(vertical: 20, horizontal: 10),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
           child: Column(
             children: [
               Padding(
-                padding: EdgeInsets.all(8.0),
+                padding: const EdgeInsets.all(8.0),
                 child: Column(
                   children: [
                     SizedBox(
@@ -46,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //============== card ====================
                         child: Card(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
                                 Column(
@@ -54,12 +76,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Text(
-                                      "Name ",
+                                    const Text(
+                                      "Name",
                                       style: textSimplegrey,
                                     ),
                                     Text(
-                                      "anon bouaban",
+                                      _userName,
                                       style: textTitleGrey,
                                     )
                                   ],
@@ -74,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         //============== card ==================
                         child: Card(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
                                 Column(
@@ -82,41 +104,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "ເພດ  ",
+                                    const Text(
+                                      "ພະແນກ  ",
                                       style: textSimplegrey,
                                     ),
                                     Text(
-                                      "ຊາຍ",
-                                      style: textTitleGrey,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-                    SizedBox(
-                        height: 80,
-
-                        //============== card ==================
-
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "ອາຍຸ  ",
-                                      style: textSimplegrey,
-                                    ),
-                                    Text(
-                                      "21 ປີ",
+                                      _departName,
                                       style: textTitleGrey,
                                     )
                                   ],
@@ -132,7 +125,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
                         child: Card(
                           child: Padding(
-                            padding: EdgeInsets.all(8.0),
+                            padding: const EdgeInsets.all(8.0),
                             child: Row(
                               children: [
                                 Column(
@@ -140,127 +133,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                       MainAxisAlignment.spaceBetween,
                                   crossAxisAlignment: CrossAxisAlignment.start,
                                   children: [
-                                    Text(
-                                      "ພະແນກ",
+                                    const Text(
+                                      "ສິດ  ",
                                       style: textSimplegrey,
                                     ),
                                     Text(
-                                      "ພະນັກງານຂົນສົ່ງສາຂາ 2",
-                                      style: textTitleGrey,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-                    SizedBox(
-                        height: 80,
-                        //============== card ==================
-
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "ເບີໂທ ",
-                                      style: textSimplegrey,
-                                    ),
-                                    Text(
-                                      "77995490",
-                                      style: textTitleGrey,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-                    SizedBox(
-                        height: 80,
-
-                        //============== card ==================
-
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "ບ້ານ ",
-                                      style: textSimplegrey,
-                                    ),
-                                    Text(
-                                      "ໂພນສະຫວາດເຫນືອ",
-                                      style: textTitleGrey,
-                                    )
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-                    SizedBox(
-                        height: 80,
-
-                        //============== card ==================
-
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "ເມືອງ ",
-                                      style: textSimplegrey,
-                                    ),
-                                    Text(
-                                      "ສີໂຄດ",
-                                      style: textTitleGrey,
-                                    ),
-                                  ],
-                                ),
-                              ],
-                            ),
-                          ),
-                        )),
-                    SizedBox(
-                        height: 80,
-
-                        //============== card ==================
-
-                        child: Card(
-                          child: Padding(
-                            padding: EdgeInsets.all(8.0),
-                            child: Row(
-                              children: [
-                                Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      "ແຂວງ",
-                                      style: textSimplegrey,
-                                    ),
-                                    Text(
-                                      "ນະຄອນຫລວງ",
+                                      _roleName,
                                       style: textTitleGrey,
                                     )
                                   ],
@@ -272,6 +150,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ],
                 ),
               ),
+              Consumer<AuthController>(builder: (context, value, _) {
+                return InkWell(
+                  onTap: () {
+                    value.clearprefers();
+                  },
+                  child: Container(
+                    width: MediaQuery.of(context).size.width / 1.8,
+                    height: 50,
+                    decoration: const BoxDecoration(
+                        color: Colors.red,
+                        borderRadius: BorderRadius.all(Radius.circular(15))),
+                    child: const Center(
+                        child: Text(
+                      "ອອກຈາກລະບົບ",
+                      style: textTitlewhite,
+                    )),
+                  ),
+                );
+              }),
             ],
           ),
         ),

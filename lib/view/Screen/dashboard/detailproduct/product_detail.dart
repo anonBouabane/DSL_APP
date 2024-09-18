@@ -27,7 +27,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
               },
               icon: const Icon(
                 Icons.shopping_cart_outlined,
-                color: Colors.white,
+                color: Colors.black,
                 size: 25,
               ))
         ],
@@ -37,13 +37,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
           },
           icon: const Icon(
             Icons.arrow_back_ios_outlined,
-            color: Colors.white,
+            color: Colors.black,
           ),
         ),
-        backgroundColor: Colors.blueAccent,
+        backgroundColor: Colors.white,
         title: const Text(
           "Detail",
-          style: textTitlewhite,
+          style: textTitle,
         ),
         centerTitle: true,
       ),
@@ -98,7 +98,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
       //========= footer ===========//
 
       bottomNavigationBar: BottomAppBar(
-        color: const Color.fromARGB(255, 68, 147, 212),
+        color:   Colors.white,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
@@ -108,7 +108,7 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                 height: 50,
                 width: MediaQuery.of(context).size.width / 1.5,
                 decoration: BoxDecoration(
-                    color: Colors.white,
+                    color: Colors.greenAccent,
                     borderRadius: BorderRadius.circular(15)),
                 child: TextButton(
                     onPressed: () {
@@ -120,13 +120,13 @@ class _DetailProductScreenState extends State<DetailProductScreen> {
                     },
                     child: const Text(
                       'ຊຳລະ',
-                      style: textTitleGrey,
+                      style: textTitlewhite,
                     ))),
             Container(
               width: MediaQuery.of(context).size.width / 5,
               height: 50,
               decoration: BoxDecoration(
-                  color: Colors.amber, borderRadius: BorderRadius.circular(15)),
+                  color: Colors.amberAccent, borderRadius: BorderRadius.circular(15)),
               child: IconButton(
                   onPressed: () {
                     final snackBar = SnackBar(

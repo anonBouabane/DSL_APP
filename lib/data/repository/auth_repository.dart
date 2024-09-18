@@ -1,20 +1,25 @@
+import 'dart:convert';
+import 'dart:math';
+
 import 'package:dio/dio.dart';
+import 'package:dslsale/data/Model/auth_model.dart';
 import 'package:dslsale/util/app_constant.dart';
 
 class AuthRepo {
   final dio = Dio();
 
-  Future<dynamic> login(
+  Future<AuthModel> login(
       {required String username, required String password}) async {
     try {
-      final data = {"username": username, "user_password": password};
+      final data = jsonEncode(
+          <String, String>{"username": username, "user_password": password});
       final response = await dio.post(AppConstant.loginUrl, data: data);
       if (response.statusCode == 200) {
-        return data;
+        return AuthModel.fromJson(json.decode(response.toString()));
       }
     } catch (e) {
       rethrow;
     }
-    return null;
+    return throw e;
   }
 }

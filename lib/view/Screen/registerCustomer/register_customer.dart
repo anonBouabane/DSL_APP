@@ -22,6 +22,7 @@ class _RegisterCustoScreenState extends State<RegisterCustoScreen> {
       lastDate: DateTime(2500),
     );
     if (picked != null && picked != _selectedDate)
+      // ignore: curly_braces_in_flow_control_structures
       setState(() {
         _selectedDate = picked;
       });
@@ -34,7 +35,6 @@ class _RegisterCustoScreenState extends State<RegisterCustoScreen> {
         FocusScope.of(context).unfocus();
       },
       child: Scaffold(
-
         //===================== header =================
         appBar: AppBar(
           actions: [
@@ -48,7 +48,7 @@ class _RegisterCustoScreenState extends State<RegisterCustoScreen> {
                 },
                 icon: const Icon(
                   Icons.cloud_done_outlined,
-                  color: Colors.white,
+                  color: Colors.black,
                   size: 25,
                 ))
           ],
@@ -56,34 +56,36 @@ class _RegisterCustoScreenState extends State<RegisterCustoScreen> {
               onPressed: () {
                 Navigator.pop(context);
               },
-              icon: const Icon(
+            icon: const Icon(
                 Icons.arrow_back_ios,
-                color: Colors.white,
+                color: Colors.black,
               )),
           title: const Text(
             "ລົງທະບຽນລູກຄ້າ",
-            style: textTitlewhite,
+            style: textTitle,
           ),
-          backgroundColor: Colors.blue,
+          backgroundColor: Colors.white,
         ),
-
 
         //=============== content body ======================
         body: SingleChildScrollView(
           child: Padding(
             padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 20),
             child: Column(children: [
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
+              TextFieldWidget(
+                width: MediaQuery.of(context).size.width / 1.2,
                 text: 'ຊື່ ແລະ ນາມສະກຸນ :',
                 keyboardType: TextInputType.text,
               ),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
+              TextFieldWidget(
+                width: MediaQuery.of(context).size.width / 1.2,
                 text: 'ເບີໂທ :',
                 keyboardType: TextInputType.text,
               ),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                
-                  text: 'ອາຍຸ :', keyboardType: TextInputType.number),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ອາຍຸ :',
+                  keyboardType: TextInputType.number),
               Padding(
                 padding: const EdgeInsets.symmetric(vertical: 5),
                 child: Row(
@@ -126,27 +128,50 @@ class _RegisterCustoScreenState extends State<RegisterCustoScreen> {
                   ],
                 ),
               ),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ບ້ານຢູ່ປະຈຸບັນ :', keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,text: 'ແຂວງ :', keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ເມືອງ :', keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ຫນ່ວຍ :', keyboardType: TextInputType.number),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ເຮືອນເລກທີ :', keyboardType: TextInputType.number),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ຊື່ຮ້ານ :', keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ບ້ານຢູ່ປະຈຸບັນ :',
+                  keyboardType: TextInputType.text),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ແຂວງ :',
+                  keyboardType: TextInputType.text),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ເມືອງ :',
+                  keyboardType: TextInputType.text),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ຫນ່ວຍ :',
+                  keyboardType: TextInputType.number),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ເຮືອນເລກທີ :',
+                  keyboardType: TextInputType.number),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ຊື່ຮ້ານ :',
+                  keyboardType: TextInputType.text),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
                   text: 'ສະຖານທີ່ຮ້ານຕັ້ງຢູ່ບ້ານ :',
                   keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,text: 'ແຂວງ :', keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ເມືອງ :', keyboardType: TextInputType.text),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ຫນ່ວຍ :', keyboardType: TextInputType.number),
-              TextFieldWidget(width: MediaQuery.of(context).size.width/1.2,
-                  text: 'ເຮືອນເລກທີ :', keyboardType: TextInputType.number),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ແຂວງ :',
+                  keyboardType: TextInputType.text),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ເມືອງ :',
+                  keyboardType: TextInputType.text),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ຫນ່ວຍ :',
+                  keyboardType: TextInputType.number),
+              TextFieldWidget(
+                  width: MediaQuery.of(context).size.width / 1.2,
+                  text: 'ເຮືອນເລກທີ :',
+                  keyboardType: TextInputType.number),
             ]),
           ),
         ),

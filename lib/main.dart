@@ -1,6 +1,7 @@
 import 'package:dslsale/Routehelper/route_helper.dart';
 import 'package:dslsale/data/controller/auth_controller.dart';
-import 'package:dslsale/data/data_dump.dart';
+import 'package:dslsale/data/controller/getcusto_controller.dart';
+import 'package:dslsale/data/controller/getproduct_controller.dart';
 import 'package:dslsale/message/message.dart';
 import 'package:dslsale/view/splashsScreen/splash_screen.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +12,8 @@ void main() {
   // WidgetsFlutterBinding.ensureInitialized();
   runApp(MultiProvider(providers: [
     ChangeNotifierProvider(create: (_)=>AuthController()),
-    ChangeNotifierProvider(create: (_)=>Data())
-
+    ChangeNotifierProvider(create: (_)=>GetCustomerController()..fetchcustomer())
+    ,ChangeNotifierProvider(create: (_)=>GetProductController()..getallproduct())
   ],child:const MyApp(),));
 }
 

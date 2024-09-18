@@ -1,6 +1,6 @@
 import 'package:dslsale/data/controller/auth_controller.dart';
+import 'package:dslsale/message/loading.dart';
 import 'package:dslsale/util/images.dart';
-import 'package:dslsale/view/Screen/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -80,6 +80,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(15)),
                         child: TextFormField(
+                          obscureText: true,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return "Password is required";
@@ -100,13 +101,14 @@ class _LoginScreenState extends State<LoginScreen> {
                           vertical: 15, horizontal: 80),
                       child: InkWell(
                         onTap: () async {
-                          // if (_formKeydata.currentState!.validate()) {
-                          //   value.login(
-                          //       username: username.text, password: password.text);
-                          //   loading(context);
-                          // }
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => const DashBoardScreen()));
+                          if (_formKeydata.currentState!.validate()) {
+                            value.login(
+                                username: username.text,
+                                password: password.text);
+                            loading(context);
+                          }
+                          // Navigator.of(context).push(MaterialPageRoute(
+                          // builder: (context) => const DashBoardScreen()));
                         },
                         child: Container(
                           height: 50,
